@@ -119,6 +119,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prompt-seed", type=int, default=1234)
     parser.add_argument("--apply-chat-template", action="store_true")
     parser.add_argument("--max-tokens", type=int, default=96)
+    parser.add_argument("--temperature", type=float, default=0.0)
     parser.add_argument("--spec-tokens", type=int, default=4)
     parser.add_argument("--ngram-prompt-lookup-max", type=int, default=4)
     parser.add_argument("--ngram-prompt-lookup-min", type=int, default=1)
@@ -305,7 +306,7 @@ def main() -> None:
             spec_metrics_collector._last_metrics_collect_time = 0.0
 
     params = SamplingParams(
-        temperature=0.0,
+        temperature=args.temperature,
         max_tokens=args.max_tokens,
         ignore_eos=True,
     )
@@ -386,6 +387,7 @@ def main() -> None:
             "prompt_seed": args.prompt_seed,
             "apply_chat_template": args.apply_chat_template,
             "max_tokens": args.max_tokens,
+            "temperature": args.temperature,
             "spec_tokens": args.spec_tokens if args.condition != "target" else None,
             "runtime_spec_tokens": runtime_spec_tokens,
             "runtime_next_spec_tokens": (

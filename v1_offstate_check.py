@@ -27,6 +27,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--num-prompts", type=int, default=32)
     parser.add_argument("--max-tokens", type=int, default=96)
     parser.add_argument("--spec-tokens", type=int, default=4)
+    parser.add_argument("--prompt-lookup-max", type=int, default=4)
+    parser.add_argument("--prompt-lookup-min", type=int, default=2)
+    parser.add_argument("--enforce-eager", action="store_true")
+    parser.add_argument("--tag", default="")
     parser.add_argument("--repeats", type=int, default=5)
     parser.add_argument("--prompt-json", default="/workspace/sharegpt_v3.json")
     parser.add_argument("--prompt-pool-size", type=int, default=256)
@@ -59,12 +63,14 @@ def main() -> None:
         max_model_len=args.max_model_len,
         gpu_memory_utilization=args.gpu_memory_utilization,
     )
+    if args.enforce_eager:
+        llm_kwargs["enforce_eager"] = True
     if args.condition == "ngram":
         llm_kwargs["speculative_config"] = {
             "method": "ngram",
             "num_speculative_tokens": args.spec_tokens,
-            "prompt_lookup_max": 4,
-            "prompt_lookup_min": 2,
+            "prompt_lookup_max": args.prompt_lookup_max,
+            "prompt_lookup_min": args.prompt_lookup_min,
         }
 
     llm = LLM(**llm_kwargs)
@@ -86,8 +92,13 @@ def main() -> None:
     result = {
         "vllm_version": vllm.__version__,
         "condition": args.condition,
+        "tag": args.tag,
         "model": args.model,
         "num_prompts": args.num_prompts,
+        "enforce_eager": args.enforce_eager,
+        "prompt_lookup": (
+            [args.prompt_lookup_min, args.prompt_lookup_max]
+            if args.condition == "ngram" else None),
         "spec_tokens": args.spec_tokens if args.condition == "ngram" else None,
         "tok_s_all": [round(v, 1) for v in tok_s],
         "tok_s_steady_mean": round(statistics.mean(tok_s[1:]), 1),

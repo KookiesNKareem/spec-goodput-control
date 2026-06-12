@@ -33,6 +33,8 @@ scheduling overhead) instead of any one proxy.
   off at saturation.
 
 Full tables, methodology, and limitations: **[RESULTS.md](RESULTS.md)**.
+The detailed running experiment notebook is **[runtime_summary.md](runtime_summary.md)**.
+Reproduction notes are in **[docs/reproducibility.md](docs/reproducibility.md)**.
 Raw logs for every number: `results/logs/`.
 
 ## Requirements
@@ -41,6 +43,9 @@ Raw logs for every number: `results/logs/`.
 - `vllm==0.6.3.post1`, `torch==2.4.0+cu121`, `transformers==4.46.3`
 - Models: Qwen2.5-Instruct 3B/7B/14B and their `-AWQ` variants
 - `ShareGPT_V3_unfiltered_cleaned_split.json` for real-workload prompts
+
+The serving benchmark environment is pinned in
+`requirements-serving-vllm063.txt`.
 
 ## Usage
 
@@ -83,6 +88,15 @@ Summarize logs into per-batch comparison tables:
 python analyze_sweep.py target_7b_sharegpt_sweep.log spec_clone_7b_sharegpt_gamma*.log
 ```
 
+Collect all benchmark JSON records from logs into auditable JSON and Markdown
+summaries:
+
+```bash
+python scripts/collect_results.py results/logs/*.log \
+  --json-out results/current-results.json \
+  --markdown-out results/current-results.md
+```
+
 The exact commands behind every table in RESULTS.md are in `scripts/`.
 
 ## Repository structure
@@ -94,6 +108,9 @@ The exact commands behind every table in RESULTS.md are in `scripts/`.
 | `auto_quant_spec_controller.py` | goodput bandit controller, acceptance-targeting baseline, vLLM 0.6.x runtime hook |
 | `analyze_sweep.py` | benchmark logs → comparison tables |
 | `scripts/` | sweep runners used for RESULTS.md |
+| `scripts/collect_results.py` | line-delimited JSON collector for sweep, arrival, and V1 logs |
+| `docs/reproducibility.md` | environment, data, patch, and run-order notes |
+| `runtime_summary.md` | detailed chronological experiment summary |
 | `patches/` | vLLM 0.6.3 files patched to support mixed FP/AWQ draft checkpoints |
 | `results/logs/` | raw benchmark logs |
 
