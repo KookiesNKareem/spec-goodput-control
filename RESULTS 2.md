@@ -52,10 +52,10 @@ clean engine without `speculative_model` reaches 867.8. In vLLM 0.6.x the
 gap comes from engine-level pessimizations applied whenever a draft is
 configured (async output processing disabled, speculative scheduling path).
 
-Consequence: every adaptive-k controller (acceptance-based, utility-based
-like [Cascade](https://arxiv.org/abs/2506.20675), or goodput-based like
-this repo) is capped well below target-only exactly in the regime where
-disabling speculation matters most. Engine-level reversible off, with
+Consequence: every adaptive-k controller — acceptance-based, utility-based
+([Cascade](https://arxiv.org/abs/2506.20675)), or goodput-based (this repo)
+— is capped well below target-only exactly in the regime where disabling
+speculation matters most. Engine-level reversible off, with
 "off ≈ target-only" as the bar, is a prerequisite for this feature class.
 
 ## 4. Latency under Poisson arrivals
@@ -76,29 +76,29 @@ Open-loop arrivals, 128 requests (`spec_decode_arrival_bench.py`), 7B:
 Speculation converts to real request latency where it should (−28% / −19%
 median at QPS 1/3). The adaptive controller matches fixed-best median while
 learning the per-concurrency policy online (k=4 at concurrency ≤1, k=2 at
-2–8), and at QPS 6 it correctly backs off, but cannot reach target parity
+2–8), and at QPS 6 it correctly backs off — but cannot reach target parity
 because of the off-state tax (§3). Controller probe overhead lands in the
 p99 tail; same root cause and fix as the §2 batch-16 miss.
 
 ## 5. Model-size scaling
 
 The useful speculation regime widens with verifier cost. Best clone action
-and its speedup vs target-only, same workload and hardware, three model
-sizes:
+and its speedup vs target-only, same workload and hardware:
 
-| batch | 3B | 7B | 14B |
-|---|---|---|---|
-| 1 | k2 +14.8% | k3 +49.6% | k3 +51.6% |
-| 4 | k2 +8.7% | k2 +17.0% | k2 +30.7% |
-| 8 | off (best spec −2.5%) | k2 +9.9% | k2 +23.9% |
-| 16 | off (−21%) | off (k2 +1.9%) | off (k1 +0.1%) |
-| 24 | | off (−15%) | |
-| 32 | | off (−16%) | |
+| batch | 7B best | 7B speedup | 14B best | 14B speedup |
+|---|---|---|---|---|
+| 1 | k3 | +49.6% | k3 | +51.6% |
+| 4 | k2 | +17.0% | k2 | +30.7% |
+| 8 | k2 | +9.9% | k2 | +23.9% |
+| 16 | off | (k2 +1.9%) | off | (k1 +0.1%) |
+| 24 | off | — | | |
+| 32 | off | — | | |
 
-The crossover moves out monotonically with verifier size: roughly batch 4–8
-at 3B, 8–16 at 7B, and 16 at 14B, and the peak win grows from +15% to +52%.
-The optimal policy differs at every (model, load) point, which is the case
-for learning it online rather than shipping a table.
+At every positive batch size the 14B win is larger than the 7B win, with the
+same oracle shape (wide k at batch 1, k=2 mid-range, off at the top). The
+k=1 crossover moves from batch 8–16 (7B) to ~16 (14B). A 3B column is being
+added (logs will appear in `results/logs/`); on a synthetic prompt set the
+3B crossover sat at batch 12–16 vs 7B's 24–32, the same ordering.
 
 Side finding: for Qwen2.5 ≥7B there is no smaller same-vocab family member,
 so classic small-draft speculation cannot even load (vLLM asserts in
