@@ -1,0 +1,10 @@
+/workspace/vllm063/lib/python3.11/site-packages/transformers/utils/hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:09<00:29,  9.84s/it]
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:20<00:20, 10.11s/it]
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:31<00:10, 10.70s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:39<00:00,  9.64s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:39<00:00,  9.89s/it]
+
+ARRIVAL_RESULT_JSON {"apply_chat_template": true, "arrival_seed": 7, "condition": "target", "draft": null, "e2e_mean_s": 3.7935851447618916, "e2e_p50_s": 3.8565540686249733, "e2e_p90_s": 4.123446951620281, "e2e_p99_s": 4.345434136688709, "load_s": 134.7837586728856, "makespan_s": 21.505878549069166, "max_observed_running": 34, "max_tokens": 96, "num_requests": 128, "output_tok_s": 571.3786568617936, "prompt_seed": 1234, "prompt_source": "sharegpt", "qps": 6.0, "runtime_spec_tokens": null, "spec_tokens": null, "target": "Qwen/Qwen2.5-7B-Instruct", "ttft_mean_s": 0.07798328626086004, "ttft_p50_s": 0.07029220461845398, "ttft_p90_s": 0.11072404682636261, "ttft_p99_s": 0.13586470484733582}

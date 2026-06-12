@@ -1,0 +1,15 @@
+/workspace/vllm063/lib/python3.11/site-packages/transformers/utils/hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:09<00:28,  9.38s/it]
+Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:19<00:20, 10.01s/it]
+Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:30<00:10, 10.21s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:38<00:00,  9.30s/it]
+Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:38<00:00,  9.54s/it]
+
+Loading safetensors checkpoint shards:   0% Completed | 0/2 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  50% Completed | 1/2 [00:15<00:15, 15.99s/it]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:20<00:00,  8.96s/it]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:20<00:00, 10.01s/it]
+
+ARRIVAL_RESULT_JSON {"apply_chat_template": true, "arrival_seed": 7, "condition": "spec_awq", "draft": "Qwen/Qwen2.5-7B-Instruct-AWQ", "e2e_mean_s": 5.028289753900026, "e2e_p50_s": 5.112834004685283, "e2e_p90_s": 6.134461309760809, "e2e_p99_s": 7.147499915212393, "load_s": 163.66157874371856, "makespan_s": 21.38031302113086, "max_observed_running": 42, "max_tokens": 96, "num_requests": 128, "output_tok_s": 574.7343356411747, "prompt_seed": 1234, "prompt_source": "sharegpt", "qps": 6.0, "runtime_spec_tokens": null, "spec_tokens": 2, "target": "Qwen/Qwen2.5-7B-Instruct", "ttft_mean_s": 0.09758727494772756, "ttft_p50_s": 0.07809003721922636, "ttft_p90_s": 0.1590731469914317, "ttft_p99_s": 0.23857575189322233}

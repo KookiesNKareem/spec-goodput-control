@@ -1,0 +1,14 @@
+/workspace/vllm063/lib/python3.11/site-packages/transformers/utils/hub.py:128: FutureWarning: Using `TRANSFORMERS_CACHE` is deprecated and will be removed in v5 of Transformers. Use `HF_HOME` instead.
+  warnings.warn(
+Loading safetensors checkpoint shards:   0% Completed | 0/2 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards:  50% Completed | 1/2 [00:12<00:12, 12.67s/it]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:36<00:00, 19.08s/it]
+Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:36<00:00, 18.12s/it]
+
+Loading safetensors checkpoint shards:   0% Completed | 0/1 [00:00<?, ?it/s]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:11<00:00, 11.49s/it]
+Loading safetensors checkpoint shards: 100% Completed | 1/1 [00:11<00:00, 11.49s/it]
+
+RESULT_JSON {"accepted_tokens": 61, "apply_chat_template": true, "auto_spec_gamma": false, "condition": "spec_awq", "draft": "Qwen/Qwen2.5-3B-Instruct-AWQ", "draft_acceptance_rate": 0.8714285714285714, "draft_quantization": "awq_marlin", "draft_tokens": 70, "elapsed_s": 0.5903173452243209, "emitted_tokens": 131, "load_s": 146.91148883197457, "max_tokens": 32, "num_prompts": 4, "output_tok_s": 216.8325241254091, "output_tokens": 128, "prompt_offset": 0, "prompt_seed": 1234, "prompt_source": "sharegpt", "repeat": 0, "repeats": 2, "runtime_next_spec_tokens": 1, "runtime_spec_tokens": 1, "spec_tokens": 1, "sweep_index": 0, "system_efficiency": 0.9357142857142857, "target": "Qwen/Qwen2.5-3B-Instruct", "target_quantization": null}
+RESULT_JSON {"accepted_tokens": 59, "apply_chat_template": true, "auto_spec_gamma": false, "condition": "spec_awq", "draft": "Qwen/Qwen2.5-3B-Instruct-AWQ", "draft_acceptance_rate": 0.8805970149253731, "draft_quantization": "awq_marlin", "draft_tokens": 67, "elapsed_s": 0.5982944127172232, "emitted_tokens": 126, "load_s": 146.91148883197457, "max_tokens": 32, "num_prompts": 4, "output_tok_s": 213.9414931499581, "output_tokens": 128, "prompt_offset": 0, "prompt_seed": 1234, "prompt_source": "sharegpt", "repeat": 1, "repeats": 2, "runtime_next_spec_tokens": 1, "runtime_spec_tokens": 1, "spec_tokens": 1, "sweep_index": 0, "system_efficiency": 0.9402985074626866, "target": "Qwen/Qwen2.5-3B-Instruct", "target_quantization": null}
+RESULTS_AGG_JSON {"apply_chat_template": true, "auto_spec_gamma": false, "condition": "spec_awq", "draft": "Qwen/Qwen2.5-3B-Instruct-AWQ", "draft_acceptance_rate_mean": 0.8760127931769723, "draft_quantization": "awq_marlin", "max_tokens": 32, "num_prompts": 4, "output_tok_s_mean": 215.3870086376836, "output_tok_s_pstdev": 1.4455154877255012, "prompt_offset": 0, "prompt_seed": 1234, "prompt_source": "sharegpt", "repeats": 2, "runtime_spec_tokens": 1, "spec_tokens": 1, "sweep_index": 0, "system_efficiency_mean": 0.9380063965884862, "target": "Qwen/Qwen2.5-3B-Instruct", "target_quantization": null}
