@@ -52,10 +52,10 @@ clean engine without `speculative_model` reaches 867.8. In vLLM 0.6.x the
 gap comes from engine-level pessimizations applied whenever a draft is
 configured (async output processing disabled, speculative scheduling path).
 
-Consequence: every adaptive-k controller — acceptance-based, utility-based
-([Cascade](https://arxiv.org/abs/2506.20675)), or goodput-based (this repo)
-— is capped well below target-only exactly in the regime where disabling
-speculation matters most. Engine-level reversible off, with
+Consequence: every adaptive-k controller (acceptance-based, utility-based
+like [Cascade](https://arxiv.org/abs/2506.20675), or goodput-based like
+this repo) is capped well below target-only exactly in the regime where
+disabling speculation matters most. Engine-level reversible off, with
 "off ≈ target-only" as the bar, is a prerequisite for this feature class.
 
 ## 4. Latency under Poisson arrivals
@@ -76,7 +76,7 @@ Open-loop arrivals, 128 requests (`spec_decode_arrival_bench.py`), 7B:
 Speculation converts to real request latency where it should (−28% / −19%
 median at QPS 1/3). The adaptive controller matches fixed-best median while
 learning the per-concurrency policy online (k=4 at concurrency ≤1, k=2 at
-2–8), and at QPS 6 it correctly backs off — but cannot reach target parity
+2–8), and at QPS 6 it correctly backs off, but cannot reach target parity
 because of the off-state tax (§3). Controller probe overhead lands in the
 p99 tail; same root cause and fix as the §2 batch-16 miss.
 

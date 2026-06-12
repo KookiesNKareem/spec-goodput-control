@@ -4,18 +4,18 @@ Adaptive speculative decoding for LLM serving, controlled by measured
 goodput instead of acceptance rate. Benchmark harness, a runtime controller
 prototype for vLLM, and the measurements behind them.
 
-Speculative decoding helps at low load and hurts at high load, but the
-signal most controllers watch — draft acceptance rate — barely changes with
+Speculative decoding helps at low load and hurts at high load, but draft
+acceptance rate, the signal most controllers watch, barely changes with
 load. This repo contains a controller that instead probes speculation
 lengths (including *off*) and rewards measured goodput, plus benchmarks
 comparing it against acceptance-targeting policies on real workloads.
 
 **Goodput** here means useful work delivered per unit of wall-clock time:
 output tokens divided by elapsed seconds, recorded once per completed
-request for the speculation setting that served it. It is measured, not
-estimated from a cost model, and it reflects everything that actually
-determines serving speed — acceptance, draft cost, verification cost, and
-scheduling overhead — rather than any one proxy.
+request for the speculation setting that served it. It is measured rather
+than estimated from a cost model, and it reflects everything that actually
+determines serving speed (acceptance, draft cost, verification cost, and
+scheduling overhead) instead of any one proxy.
 
 ## Key findings
 
@@ -26,7 +26,7 @@ scheduling overhead — rather than any one proxy.
   load and found a better action (k=4 at batch 1, +67%) than the offline
   sweep used to build that oracle.
 - Disabling speculation at runtime still costs 15–18% versus an engine
-  launched without a draft — an engine-level gap that caps every adaptive-k
+  launched without a draft. This engine-level gap caps every adaptive-k
   controller regardless of policy.
 - Under Poisson arrivals, speculation cuts median request latency 19–28% at
   low load; the controller learns per-concurrency policy online and backs
