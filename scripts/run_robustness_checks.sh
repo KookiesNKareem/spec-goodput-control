@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Night 2: V1 off-state tax ablations, then temperature-0.7 and Mistral
-# robustness runs on the V0 harness.
+# Robustness checks: V1 off-state tax ablations, then temperature-0.7 and
+# Mistral robustness runs on the V0 harness.
 set -uo pipefail
 cd /workspace
 export HF_HOME=/workspace/hf
@@ -57,4 +57,4 @@ for g in 1 2; do
   echo "stage mistral gamma $g exit=$?"
 done
 
-echo "ALL_NIGHT2_DONE"
+echo "ALL_ROBUSTNESS_CHECKS_DONE"

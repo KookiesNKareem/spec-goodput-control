@@ -96,14 +96,13 @@ runner paths before launching.
 bash scripts/run_sharegpt_3b_sweep.sh
 bash scripts/run_sharegpt_7b_sweep.sh
 bash scripts/run_sharegpt_14b_sweep.sh
-bash scripts/run_phase1_night.sh
+bash scripts/run_controller_eval.sh
 ```
 
-Night 2 robustness checks are scripted but the output logs are not present in
-this checkout:
+Additional robustness checks:
 
 ```bash
-bash scripts/run_night2.sh
+bash scripts/run_robustness_checks.sh
 ```
 
 That batch runs:

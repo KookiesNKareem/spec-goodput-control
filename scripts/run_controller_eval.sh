@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Phase 1 night batch: acceptance-targeting vs goodput controller head-to-head,
-# then Poisson arrival QPS sweep. Run after run_sharegpt_7b_sweep.sh completes.
+# Controller evaluation batch: acceptance-targeting vs goodput controller
+# head-to-head, then Poisson arrival QPS sweep. Run after
+# run_sharegpt_7b_sweep.sh completes.
 set -uo pipefail
 cd /workspace
 . vllm063/bin/activate
@@ -61,4 +62,4 @@ for qps in 1 3 6; do
   echo "stage arrival auto qps=$qps exit=$?"
 done
 
-echo "ALL_NIGHT_STAGES_DONE"
+echo "ALL_CONTROLLER_EVAL_DONE"
