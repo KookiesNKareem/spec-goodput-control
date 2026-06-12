@@ -120,6 +120,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--apply-chat-template", action="store_true")
     parser.add_argument("--max-tokens", type=int, default=96)
     parser.add_argument("--temperature", type=float, default=0.0)
+    parser.add_argument(
+        "--tokenizer-mode",
+        default=None,
+        help="Optional vLLM tokenizer_mode override, e.g. 'mistral'.",
+    )
     parser.add_argument("--spec-tokens", type=int, default=4)
     parser.add_argument("--ngram-prompt-lookup-max", type=int, default=4)
     parser.add_argument("--ngram-prompt-lookup-min", type=int, default=1)
@@ -224,6 +229,8 @@ def main() -> None:
         "gpu_memory_utilization": args.gpu_memory_utilization,
         "disable_log_stats": False,
     }
+    if args.tokenizer_mode:
+        llm_kwargs["tokenizer_mode"] = args.tokenizer_mode
     if args.target_quantization:
         llm_kwargs["quantization"] = args.target_quantization
 
@@ -387,6 +394,7 @@ def main() -> None:
             "prompt_seed": args.prompt_seed,
             "apply_chat_template": args.apply_chat_template,
             "max_tokens": args.max_tokens,
+            "tokenizer_mode": args.tokenizer_mode,
             "temperature": args.temperature,
             "spec_tokens": args.spec_tokens if args.condition != "target" else None,
             "runtime_spec_tokens": runtime_spec_tokens,
@@ -515,6 +523,8 @@ def main() -> None:
                 "prompt_seed": args.prompt_seed,
                 "apply_chat_template": args.apply_chat_template,
                 "max_tokens": args.max_tokens,
+                "tokenizer_mode": args.tokenizer_mode,
+                "temperature": args.temperature,
                 "spec_tokens": args.spec_tokens if args.condition != "target" else None,
                 "runtime_spec_tokens": current_runtime_spec_tokens(),
                 "auto_spec_gamma": args.auto_spec_gamma,

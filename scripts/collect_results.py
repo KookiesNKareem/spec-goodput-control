@@ -25,6 +25,8 @@ PREFIXES = {
     "ARRIVAL_RESULT_JSON ": "arrivals",
     "V1_CHECK_JSON ": "v1_checks",
 }
+RUN_PREFIX = "RESULT_JSON "
+BACKFILL_KEYS = ("temperature", "tokenizer_mode")
 
 
 def read_records(paths: Iterable[str]) -> dict[str, list[dict[str, Any]]]:
@@ -37,11 +39,28 @@ def read_records(paths: Iterable[str]) -> dict[str, list[dict[str, Any]]]:
         path = Path(path_text)
         if not path.exists():
             continue
+        run_metadata: dict[int, dict[str, Any]] = {}
         with path.open(errors="ignore") as handle:
             for line_number, line in enumerate(handle, start=1):
+                if line.startswith(RUN_PREFIX):
+                    row = json.loads(line[len(RUN_PREFIX):])
+                    sweep_index = row.get("sweep_index")
+                    if sweep_index is not None:
+                        run_metadata[int(sweep_index)] = {
+                            key: row.get(key)
+                            for key in BACKFILL_KEYS
+                            if key in row
+                        }
+                    continue
                 for prefix, bucket in PREFIXES.items():
                     if line.startswith(prefix):
                         row = json.loads(line[len(prefix):])
+                        if bucket == "sweeps":
+                            metadata = run_metadata.get(int(row.get("sweep_index", -1)))
+                            if metadata:
+                                for key, value in metadata.items():
+                                    if key not in row:
+                                        row[key] = value
                         row["log_path"] = str(path)
                         row["log_line"] = line_number
                         records[bucket].append(row)

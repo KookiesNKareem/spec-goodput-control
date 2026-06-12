@@ -116,6 +116,33 @@ is the only in-family training-free draft. N-gram/prompt-lookup speculation
 loses at every batch size on this workload (acceptance 0.22–0.35, −5% to
 −28% throughput).
 
+## 6. Robustness checks: sampling and another model family
+
+Additional A40 runs on 2026-06-12 keep the same policy shape under
+temperature sampling and with Mistral-7B-Instruct-v0.2. Full run notes are in
+`docs/runs/2026-06-12-a40.md`.
+
+Qwen2.5-7B, ShareGPT, temperature=0.7:
+
+| batch | target | clone k1 | clone k2 | clone k3 | best action |
+|---|---:|---:|---:|---:|---|
+| 1 | 34.0 | 41.4 (+21.7%) | 45.0 (+32.4%) | 43.3 (+27.3%) | k2 |
+| 8 | 252.3 | 291.0 (+15.4%) | 305.1 (+20.9%) | 275.0 (+9.0%) | k2 |
+| 32 | 870.3 | 723.1 (−16.9%) | 686.5 (−21.1%) | 652.6 (−25.0%) | off |
+
+Mistral-7B-Instruct-v0.2, ShareGPT, greedy:
+
+| batch | target | clone k1 | clone k2 | best action |
+|---|---:|---:|---:|---|
+| 1 | 35.6 | 46.9 (+31.8%) | 55.4 (+55.5%) | k2 |
+| 8 | 257.9 | 300.2 (+16.4%) | 315.6 (+22.3%) | k2 |
+| 32 | 835.3 | 692.9 (−17.1%) | 763.4 (−8.6%) | off |
+
+In both checks the acceptance signal remains high where the goodput decision
+should turn speculation off: Qwen temperature sampling has k1 acceptance
+0.884 at batch 32 while losing 16.9%, and Mistral k2 acceptance is 0.889
+while losing 8.6%.
+
 ## Limitations
 
 vLLM 0.6.x (V0 engine) prototype; single GPU type; greedy decoding; fixed
