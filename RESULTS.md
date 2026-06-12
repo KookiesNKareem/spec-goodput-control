@@ -55,7 +55,16 @@ configured (async output processing disabled, speculative scheduling path).
 Consequence: every adaptive-k controller (acceptance-based, utility-based
 like [Cascade](https://arxiv.org/abs/2506.20675), or goodput-based like
 this repo) is capped well below target-only exactly in the regime where
-disabling speculation matters most. Engine-level reversible off, with
+disabling speculation matters most.
+
+Spot-checked on current vLLM (0.22.1, V1 engine), same hardware and
+workload at batch 32: a clean engine reaches 1081 tok/s steady; the same
+engine with an ngram speculative config attached reaches 920 tok/s, a
+14.9% loss (`v1_offstate_check.py`, logs in `results/logs/`). The V1
+number bundles ngram proposal cost with engine overhead since V1 exposes
+no runtime off action at all, which is precisely the gap: a controller
+that wants to stop speculating under load currently has no mechanism that
+recovers target-only performance. Engine-level reversible off, with
 "off ≈ target-only" as the bar, is a prerequisite for this feature class.
 
 ## 4. Latency under Poisson arrivals
